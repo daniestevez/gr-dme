@@ -11,7 +11,11 @@
 ########################################################################
 include(GrPlatform) #define LIB_SUFFIX
 
-list(APPEND dme_sources)
+list(APPEND dme_sources
+    pulse_detector_impl.cc
+    double_pulse_coalesce_impl.cc
+    polyphase_fine_estimate_impl.cc
+    tag_file_sink_impl.cc)
 
 set(dme_sources
     "${dme_sources}"

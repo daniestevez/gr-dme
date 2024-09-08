@@ -1,0 +1,21 @@
+id: dme_tag_file_sink
+label: DME Tag File Sink
+category: '[DME]'
+
+templates:
+  imports: from gnuradio import dme
+  make: dme.tag_file_sink(${offset_file}, ${mf_file})
+
+parameters:
+- id: offset_file
+  label: Offset file
+  dtype: file_save
+- id: mf_file
+  label: Matched filter file
+  dtype: file_save
+
+inputs:
+- domain: stream
+  dtype: complex
+
+file_format: 1

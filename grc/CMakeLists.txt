@@ -6,4 +6,8 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 #
 
-install(FILES DESTINATION share/gnuradio/grc/blocks)
+install(FILES
+    dme_pulse_detector.block.yml
+    dme_double_pulse_coalsce.block.yml
+    dme_polyphase_fine_estimate.block.yml
+    dme_tag_file_sink.block.yml DESTINATION share/gnuradio/grc/blocks)

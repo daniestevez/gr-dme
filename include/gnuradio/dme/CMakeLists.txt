@@ -9,4 +9,8 @@
 ########################################################################
 # Install public header files
 ########################################################################
-install(FILES api.h DESTINATION include/gnuradio/dme)
+install(FILES api.h
+    pulse_detector.h
+    double_pulse_coalesce.h
+    polyphase_fine_estimate.h
+    tag_file_sink.h DESTINATION include/gnuradio/dme)

@@ -1,0 +1,29 @@
+id: dme_double_pulse_coalsce
+label: DME Double Pulse Coalesce
+category: '[DME]'
+
+templates:
+  imports: from gnuradio import dme
+  make: dme.double_pulse_coalesce(${min_distance}, ${max_distance}, ${delay})
+
+parameters:
+- id: min_distance
+  label: Minimum distance
+  dtype: int
+- id: max_distance
+  label: Maximum distance
+  dtype: int
+- id: delay
+  label: Delay
+  dtype: int
+  default: 0
+
+inputs:
+- domain: stream
+  dtype: complex
+
+outputs:
+- domain: stream
+  dtype: complex
+
+file_format: 1

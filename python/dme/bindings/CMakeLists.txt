@@ -24,7 +24,11 @@ include(GrPybind)
 # Python Bindings
 ########################################################################
 
-list(APPEND dme_python_files python_bindings.cc)
+list(APPEND dme_python_files
+    pulse_detector_python.cc
+    double_pulse_coalesce_python.cc
+    polyphase_fine_estimate_python.cc
+    tag_file_sink_python.cc python_bindings.cc)
 
 gr_pybind_make_oot(dme ../../.. gr::dme "${dme_python_files}")
 

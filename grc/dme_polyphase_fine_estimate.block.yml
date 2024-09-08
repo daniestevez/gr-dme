@@ -1,0 +1,29 @@
+id: dme_polyphase_fine_estimate
+label: DME Polyphase Fine Estimate
+category: '[DME]'
+
+templates:
+  imports: from gnuradio import dme
+  make: dme.polyphase_fine_estimate(${polyphase_taps}, ${num_branches}, ${window_size})
+
+parameters:
+- id: polyphase_taps
+  label: Polyphase Taps
+  dtype: float_vector
+- id: num_branches
+  label: Number of branches
+  dtype: int
+- id: window_size
+  label: Window size
+  dtype: int
+  default: 0
+
+inputs:
+- domain: stream
+  dtype: complex
+
+outputs:
+- domain: stream
+  dtype: complex
+
+file_format: 1

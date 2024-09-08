@@ -21,6 +21,10 @@ namespace py = pybind11;
 // Please do not delete
 /**************************************/
 // BINDING_FUNCTION_PROTOTYPES(
+    void bind_pulse_detector(py::module& m);
+    void bind_double_pulse_coalesce(py::module& m);
+    void bind_polyphase_fine_estimate(py::module& m);
+    void bind_tag_file_sink(py::module& m);
 // ) END BINDING_FUNCTION_PROTOTYPES
 
 
@@ -49,5 +53,9 @@ PYBIND11_MODULE(dme_python, m)
     // Please do not delete
     /**************************************/
     // BINDING_FUNCTION_CALLS(
+    bind_pulse_detector(m);
+    bind_double_pulse_coalesce(m);
+    bind_polyphase_fine_estimate(m);
+    bind_tag_file_sink(m);
     // ) END BINDING_FUNCTION_CALLS
 }

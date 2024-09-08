@@ -1,0 +1,35 @@
+id: dme_pulse_detector
+label: DME Pulse Detector
+category: '[DME]'
+
+templates:
+  imports: from gnuradio import dme
+  make: dme.pulse_detector(${window_size}, ${threshold}, ${noise_alpha})
+  callbacks:
+  - set_threshold(${threshold})
+  - set_noise_alpha(${noise_alpha})
+
+parameters:
+- id: window_size
+  label: Window size
+  dtype: int
+- id: threshold
+  label: Threshold
+  dtype: float
+- id: noise_alpha
+  label: Noise alpha
+  dtype: float
+  default: 1e-5
+inputs:
+- label: in
+  domain: stream
+  dtype: complex
+- label: mf_pwr
+  domain: stream
+  dtype: float
+
+outputs:
+- domain: stream
+  dtype: complex
+
+file_format: 1
