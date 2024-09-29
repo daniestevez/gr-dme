@@ -1,0 +1,537 @@
+options:
+  parameters:
+    author: ''
+    catch_exceptions: 'True'
+    category: '[GRC Hier Blocks]'
+    cmake_opt: ''
+    comment: ''
+    copyright: ''
+    description: ''
+    gen_cmake: 'On'
+    gen_linking: dynamic
+    generate_options: no_gui
+    hier_block_src_path: '.:'
+    id: dme_receiver
+    max_nouts: '0'
+    output_language: python
+    placement: (0,0)
+    qt_qss_theme: ''
+    realtime_scheduling: ''
+    run: 'True'
+    run_command: '{python} -u {filename}'
+    run_options: run
+    sizing_mode: fixed
+    thread_safe_setters: ''
+    title: Daniel Estevez
+    window_size: (1000,1000)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [8, 8]
+    rotation: 0
+    state: enabled
+
+blocks:
+- name: npolyphase
+  id: variable
+  parameters:
+    comment: ''
+    value: '128'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [344, 164.0]
+    rotation: 0
+    state: enabled
+- name: polyphase_double_pulse
+  id: variable
+  parameters:
+    comment: ''
+    value: np.concatenate((polyphase_pulse, np.zeros(pulse_spacing_polysamples)))
+      + np.concatenate((np.zeros(pulse_spacing_polysamples), polyphase_pulse))
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [880, 164.0]
+    rotation: 0
+    state: enabled
+- name: polyphase_pulse
+  id: variable
+  parameters:
+    comment: ''
+    value: np.exp(-(np.arange(pulse_ntaps * npolyphase) - pulse_ntaps * npolyphase
+      // 2)**2 / (2 * (pulse_sigma * samp_rate * npolyphase)**2))
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [472, 164.0]
+    rotation: 0
+    state: enabled
+- name: polyphase_taps
+  id: variable
+  parameters:
+    comment: ''
+    value: polyphase_double_pulse * np.max(polyphase_double_pulse) / np.sum(polyphase_double_pulse**2)
+      * npolyphase
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1072, 164.0]
+    rotation: 0
+    state: enabled
+- name: pulse_ntaps
+  id: variable
+  parameters:
+    comment: ''
+    value: '27'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [584, 12.0]
+    rotation: 0
+    state: enabled
+- name: pulse_sigma
+  id: variable
+  parameters:
+    comment: ''
+    value: pulse_width / (2 * np.sqrt(2 * np.log(2)))
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [464, 12.0]
+    rotation: 0
+    state: enabled
+- name: pulse_spacing
+  id: variable
+  parameters:
+    comment: ''
+    value: 12e-6
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [344, 84.0]
+    rotation: 0
+    state: enabled
+- name: pulse_spacing_polysamples
+  id: variable
+  parameters:
+    comment: ''
+    value: round(pulse_spacing * samp_rate * npolyphase)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [664, 164.0]
+    rotation: 0
+    state: enabled
+- name: pulse_spacing_tolerance
+  id: variable
+  parameters:
+    comment: ''
+    value: '0.5e-6'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [472, 84.0]
+    rotation: 0
+    state: enabled
+- name: pulse_taps
+  id: variable
+  parameters:
+    comment: ''
+    value: pulse_taps_unnormalized * np.max(pulse_taps_unnormalized) / np.sum(pulse_taps_unnormalized**2)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [896, 12.0]
+    rotation: 0
+    state: enabled
+- name: pulse_taps_unnormalized
+  id: variable
+  parameters:
+    comment: ''
+    value: np.exp(-(np.arange(pulse_ntaps) - pulse_ntaps//2)**2 / (2 * (pulse_sigma
+      * samp_rate)**2))
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [712, 12.0]
+    rotation: 0
+    state: enabled
+- name: pulse_width
+  id: variable
+  parameters:
+    comment: ''
+    value: '3.5e-6'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [344, 12.0]
+    rotation: 0
+    state: enabled
+- name: samp_rate
+  id: variable
+  parameters:
+    comment: ''
+    value: '2500000'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [200, 12]
+    rotation: 0
+    state: enabled
+- name: threshold
+  id: variable_qtgui_entry
+  parameters:
+    comment: ''
+    entry_signal: editingFinished
+    gui_hint: ''
+    label: ''
+    type: real
+    value: '10'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1104, 12.0]
+    rotation: 0
+    state: disabled
+- name: threshold
+  id: variable
+  parameters:
+    comment: ''
+    value: '10'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1224, 12.0]
+    rotation: 0
+    state: enabled
+- name: blocks_complex_to_mag_squared_0
+  id: blocks_complex_to_mag_squared
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [864, 376.0]
+    rotation: 0
+    state: enabled
+- name: blocks_delay_0
+  id: blocks_delay
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    delay: pulse_ntaps//2
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_ports: '1'
+    showports: 'False'
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [664, 268.0]
+    rotation: 0
+    state: enabled
+- name: blocks_file_source_0
+  id: blocks_file_source
+  parameters:
+    affinity: ''
+    alias: ''
+    begin_tag: pmt.PMT_NIL
+    comment: ''
+    file: /mnt/CNR_VOR_ground_2024-07-13.sigmf-data
+    length: '0'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    offset: '0'
+    repeat: 'False'
+    type: short
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [40, 276.0]
+    rotation: 0
+    state: enabled
+- name: blocks_interleaved_short_to_complex_0
+  id: blocks_interleaved_short_to_complex
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    scale_factor: 2**15
+    swap: 'False'
+    vector_input: 'False'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [280, 300.0]
+    rotation: 0
+    state: enabled
+- name: blocks_throttle2_0
+  id: blocks_throttle2
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    ignoretag: 'True'
+    limit: auto
+    maximum: '0.1'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    samples_per_second: samp_rate
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [472, 300.0]
+    rotation: 0
+    state: disabled
+- name: dme_double_pulse_coalsce_0
+  id: dme_double_pulse_coalsce
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    delay: round(0.5 * pulse_spacing * samp_rate)
+    max_distance: int(np.ceil((pulse_spacing + pulse_spacing_tolerance) * samp_rate))
+    maxoutbuf: '0'
+    min_distance: int((pulse_spacing - pulse_spacing_tolerance) * samp_rate)
+    minoutbuf: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [144, 572.0]
+    rotation: 0
+    state: enabled
+- name: dme_polyphase_fine_estimate_0
+  id: dme_polyphase_fine_estimate
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_branches: npolyphase
+    polyphase_taps: polyphase_taps
+    window_size: int(2 * pulse_width * samp_rate)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [440, 572.0]
+    rotation: 0
+    state: enabled
+- name: dme_pulse_detector_0
+  id: dme_pulse_detector
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    noise_alpha: 1e-5
+    threshold: threshold
+    window_size: pulse_ntaps
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1080, 268.0]
+    rotation: 0
+    state: enabled
+- name: dme_tag_file_sink_0
+  id: dme_tag_file_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    mf_file: CNR_VOR_ground_2024-07-13_mf.c64
+    offset_file: CNR_VOR_ground_2024-07-13_offsets.f64
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [704, 684.0]
+    rotation: 0
+    state: enabled
+- name: fir_filter_xxx_0
+  id: fir_filter_xxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    decim: '1'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    samp_delay: '0'
+    taps: pulse_taps
+    type: ccf
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [664, 364.0]
+    rotation: 0
+    state: enabled
+- name: import_0
+  id: import
+  parameters:
+    alias: ''
+    comment: ''
+    imports: import numpy as np
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [200, 84.0]
+    rotation: 0
+    state: enabled
+- name: qtgui_time_sink_x_0_0
+  id: qtgui_time_sink_x
+  parameters:
+    affinity: ''
+    alias: ''
+    alpha1: '1.0'
+    alpha10: '1.0'
+    alpha2: '1.0'
+    alpha3: '1.0'
+    alpha4: '1.0'
+    alpha5: '1.0'
+    alpha6: '1.0'
+    alpha7: '1.0'
+    alpha8: '1.0'
+    alpha9: '1.0'
+    autoscale: 'False'
+    axislabels: 'True'
+    color1: blue
+    color10: dark blue
+    color2: red
+    color3: green
+    color4: black
+    color5: cyan
+    color6: magenta
+    color7: yellow
+    color8: dark red
+    color9: dark green
+    comment: ''
+    ctrlpanel: 'False'
+    entags: 'True'
+    grid: 'False'
+    gui_hint: ''
+    label1: Signal 1
+    label10: Signal 10
+    label2: Signal 2
+    label3: Signal 3
+    label4: Signal 4
+    label5: Signal 5
+    label6: Signal 6
+    label7: Signal 7
+    label8: Signal 8
+    label9: Signal 9
+    legend: 'True'
+    marker1: '-1'
+    marker10: '-1'
+    marker2: '-1'
+    marker3: '-1'
+    marker4: '-1'
+    marker5: '-1'
+    marker6: '-1'
+    marker7: '-1'
+    marker8: '-1'
+    marker9: '-1'
+    name: '""'
+    nconnections: '1'
+    size: int(samp_rate * 1e-3)
+    srate: samp_rate
+    stemplot: 'False'
+    style1: '1'
+    style10: '1'
+    style2: '1'
+    style3: '1'
+    style4: '1'
+    style5: '1'
+    style6: '1'
+    style7: '1'
+    style8: '1'
+    style9: '1'
+    tr_chan: '0'
+    tr_delay: 100e-6
+    tr_level: '0'
+    tr_mode: qtgui.TRIG_MODE_TAG
+    tr_slope: qtgui.TRIG_SLOPE_POS
+    tr_tag: '"pulse"'
+    type: complex
+    update_time: '0.10'
+    width1: '1'
+    width10: '1'
+    width2: '1'
+    width3: '1'
+    width4: '1'
+    width5: '1'
+    width6: '1'
+    width7: '1'
+    width8: '1'
+    width9: '1'
+    ylabel: Amplitude
+    ymax: '1'
+    ymin: '-1'
+    yunit: '""'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [704, 572.0]
+    rotation: 0
+    state: disabled
+
+connections:
+- [blocks_complex_to_mag_squared_0, '0', dme_pulse_detector_0, '1']
+- [blocks_delay_0, '0', dme_pulse_detector_0, '0']
+- [blocks_file_source_0, '0', blocks_interleaved_short_to_complex_0, '0']
+- [blocks_interleaved_short_to_complex_0, '0', blocks_delay_0, '0']
+- [blocks_interleaved_short_to_complex_0, '0', blocks_throttle2_0, '0']
+- [blocks_interleaved_short_to_complex_0, '0', fir_filter_xxx_0, '0']
+- [blocks_throttle2_0, '0', blocks_delay_0, '0']
+- [blocks_throttle2_0, '0', fir_filter_xxx_0, '0']
+- [dme_double_pulse_coalsce_0, '0', dme_polyphase_fine_estimate_0, '0']
+- [dme_polyphase_fine_estimate_0, '0', dme_tag_file_sink_0, '0']
+- [dme_polyphase_fine_estimate_0, '0', qtgui_time_sink_x_0_0, '0']
+- [dme_pulse_detector_0, '0', dme_double_pulse_coalsce_0, '0']
+- [fir_filter_xxx_0, '0', blocks_complex_to_mag_squared_0, '0']
+
+metadata:
+  file_format: 1
+  grc_version: 3.10.10.0
